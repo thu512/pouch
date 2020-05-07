@@ -1,0 +1,2 @@
+rootProject.name='pouch'
+include ':app'
