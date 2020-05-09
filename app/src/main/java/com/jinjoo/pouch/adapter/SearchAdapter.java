@@ -1,7 +1,6 @@
 package com.jinjoo.pouch.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,34 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.jinjoo.pouch.R;
 import com.jinjoo.pouch.model.Cosmetic;
-import com.jinjoo.pouch.model.naver.Res;
-import com.jinjoo.pouch.model.pub.Item;
-import com.jinjoo.pouch.net.NaverNet;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
     Context context;
-    List<Item> items;
-    List<Cosmetic> list;
+
+    List<Cosmetic> items;
 
 
     //어댑터 생성자 -> getApplicationContext, 리스트로 보여줄 아이템
-    public SearchAdapter(Context context, List<Item> items) {
+    public SearchAdapter(Context context, List<Cosmetic> items) {
         this.context = context;
         this.items = items;
-        list = new ArrayList<>();
-        for (int i=0; i<items.size(); i++){
-            list.add(new Cosmetic(items.get(i).getITEM_NAME(), items.get(i).getENTP_NAME()));
-
-        }
-
     }
 
     @NonNull
@@ -55,11 +40,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        getImg(items.get(position).getITEM_NAME(),list.get(position));
-        Log.d("jinjoof", "사진3: "+list.get(position).getImg());
-        Glide.with(context).load(list.get(position).getImg()).into(holder.imageView);
-        holder.brand.setText(list.get(position).getBrand());
-        holder.name.setText(list.get(position).getName());
+
+        Glide.with(context).load(items.get(position).getImg()).into(holder.imageView);
+        holder.brand.setText(items.get(position).getBrand());
+        holder.name.setText(items.get(position).getName());
 
         holder.regi.setOnClickListener(view -> {
             //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(imgData.getLink()));
@@ -71,37 +55,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return items.size();
     }
 
 
-    public void getImg(String name, Cosmetic cos){
-        Call<Res> res = NaverNet.getInstance().getAllFactoryIm().img(context.getResources().getString(R.string.naver_id), context.getResources().getString(R.string.naver_key), name, 10);
-        res.enqueue(new Callback<Res>() {
-            @Override
-            public void onResponse(Call<com.jinjoo.pouch.model.naver.Res> call, Response<Res> response) {
-                if(response.isSuccessful()){
-                    Log.d("jinjoof", "사진은: "+response.body().getItems().toString());
-                    for(int i=0; i<response.body().getItems().size(); i++){
-                        if(response.body().getItems().get(i).getImage()!=null){
-                            cos.setImg(response.body().getItems().get(i).getImage());
-                            Log.d("jinjoof", "사진: "+cos.getImg());
-                            break;
-                        }
-                    }
 
-
-                }else{
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<com.jinjoo.pouch.model.naver.Res> call, Throwable t) {
-                Log.d("jinjoo", "실패"+t.getLocalizedMessage());
-            }
-        });
-    }
 
 
     //뷰홀더
