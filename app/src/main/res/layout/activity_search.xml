@@ -44,9 +44,8 @@
                 android:id="@+id/bacode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginEnd="65dp"
                 android:fontFamily="sans-serif-medium"
-                android:gravity="center"
                 android:letterSpacing="0.01"
                 android:paddingBottom="5dp"
                 android:text="@string/bac_text"
@@ -54,24 +53,21 @@
                 android:textColor="#cccccc"
                 android:textSize="18sp"
                 android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/direct"
                 app:layout_constraintEnd_toStartOf="@+id/direct"
-                app:layout_constraintHorizontal_bias="0.35"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/direct" />
 
             <Button
                 android:id="@+id/exit"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="107dp"
                 android:background="@drawable/close_24_px"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.8"
+                app:layout_constraintBottom_toBottomOf="@+id/direct"
                 app:layout_constraintStart_toEndOf="@+id/direct"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/direct" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/middle"
@@ -82,10 +78,10 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="14dp"
             android:background="@drawable/round"
-            app:layout_constraintBottom_toTopOf="@+id/search_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top">
+            app:layout_constraintTop_toBottomOf="@+id/top"
+            app:layout_constraintBottom_toTopOf="@+id/search_list">
 
 
             <EditText
@@ -115,7 +111,7 @@
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:layout_marginEnd="16dp"
-
+                app:layout_constraintHorizontal_chainStyle="packed"
                 android:background="@drawable/padding_group_3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -131,5 +127,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/middle" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

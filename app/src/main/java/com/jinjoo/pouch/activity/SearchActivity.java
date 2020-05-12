@@ -6,8 +6,10 @@ import android.util.Log;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.jinjoo.pouch.R;
 import com.jinjoo.pouch.adapter.SearchAdapter;
+import com.jinjoo.pouch.bacode.CustomScannerActivity;
 import com.jinjoo.pouch.databinding.ActivitySearchBinding;
 import com.jinjoo.pouch.model.Cosmetic;
 import com.jinjoo.pouch.model.pub.Item;
@@ -40,6 +42,10 @@ public class SearchActivity extends Activity {
 
         //바코드 버튼
         binding.bacode.setOnClickListener((view -> {
+            IntentIntegrator integrator = new IntentIntegrator(this);
+            integrator.setBeepEnabled(false);
+            integrator.setCaptureActivity(CustomScannerActivity.class);
+            integrator.initiateScan();
 
         }));
 
