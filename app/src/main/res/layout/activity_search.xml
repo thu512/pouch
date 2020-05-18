@@ -16,7 +16,9 @@
             app:layout_constraintBottom_toTopOf="@+id/middle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
 
             <TextView
@@ -81,7 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top"
-            app:layout_constraintBottom_toTopOf="@+id/search_list">
+            >
 
 
             <EditText
@@ -108,6 +110,7 @@
 
             <Button
                 android:id="@+id/search"
+                android:stateListAnimator="@null"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:layout_marginEnd="16dp"
@@ -119,6 +122,51 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/not_item"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/middle"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/not_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19sp"
+                android:textColor="#000000"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="10sp"
+                android:gravity="center_horizontal"
+                android:text="찾는 제품이 없습니다.\n해당 이름으로 등록할까요?"
+                app:layout_constraintTop_toTopOf="@+id/not_item"
+                app:layout_constraintBottom_toBottomOf="@+id/not_item"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="78dp"
+                />
+
+                <Button
+                    android:id="@+id/register"
+                    android:layout_width="62dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/register_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/not_msg"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:stateListAnimator="@null"
+                    />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_list"
             android:layout_width="0dp"
@@ -127,8 +175,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/middle" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

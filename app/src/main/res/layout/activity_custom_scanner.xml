@@ -64,7 +64,7 @@
             android:lineSpacingExtra="8sp"
             android:gravity="center_horizontal"
             android:background="@color/zxing_transparent"
-            android:text="바코드를 스캔해주세요."
+            android:text="바코드를 중앙에 위치에 주세요."
             />
     </LinearLayout>
 
