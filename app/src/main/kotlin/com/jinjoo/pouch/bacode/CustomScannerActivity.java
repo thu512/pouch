@@ -3,6 +3,7 @@ package com.jinjoo.pouch.bacode;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.jinjoo.pouch.R;
@@ -18,7 +19,7 @@ public class CustomScannerActivity extends Activity implements DecoratedBarcodeV
     private DecoratedBarcodeView barcodeScannerView;
     private ImageButton btnSetting, btnSwitchFlash;
     private Boolean switchFlashlightButtonCheck;
-
+    private Button exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,28 +28,20 @@ public class CustomScannerActivity extends Activity implements DecoratedBarcodeV
 
         switchFlashlightButtonCheck = true;
 
-//        btnSetting = findViewById(R.id.btn_setting);
-//        btnSwitchFlash = findViewById(R.id.btn_switch_flash);
+        exit = findViewById(R.id.exit);
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
-
 
         if (!hasFlash()) {
             btnSwitchFlash.setVisibility(View.GONE);
         }
 
-        //barcodeScannerView.setTorchListener(this);
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
 
-//        btnSwitchFlash.setOnClickListener(v -> {
-//            if (switchFlashlightButtonCheck) {
-//                barcodeScannerView.setTorchOn();
-//            } else {
-//                barcodeScannerView.setTorchOff();
-//            }
-//        });
-
+        exit.setOnClickListener(l -> {
+            this.finish();
+        });
 
     }
 
