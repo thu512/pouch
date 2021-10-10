@@ -2,6 +2,7 @@ package com.jinjoo.pouch.api.model
 
 class Cosmetic(var name: String, var brand: String) {
     var img: String? = null
+    var category: String? = null
     override fun toString(): String {
         return "Cosmetic{" +
                 "img='" + img + '\'' +

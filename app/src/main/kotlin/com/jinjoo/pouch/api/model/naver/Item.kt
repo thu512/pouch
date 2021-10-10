@@ -1,6 +1,6 @@
 package com.jinjoo.pouch.api.model.naver
 
-class Item (
-    val image: String,
-    val category3: String
+data class Item (
+    var image: String? = null,
+    var category3: String? =null
 )

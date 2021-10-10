@@ -15,6 +15,7 @@ import com.jinjoo.pouch.api.model.Cosmetic
 import com.jinjoo.pouch.api.model.pub.Res
 import com.jinjoo.pouch.api.provideImgApi
 import com.jinjoo.pouch.api.provideSearchCosApi
+import com.jinjoo.pouch.dialog.AddItemDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_search.*
@@ -22,23 +23,23 @@ import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : Activity(), SearchAdapter.ItemClickListener {
 
-    internal val adapter by lazy {
+    private val adapter by lazy {
         SearchAdapter().apply { setItemClickListener(this@SearchActivity) }
     }
     private var list: MutableList<Cosmetic> = mutableListOf()
-    internal val imm: InputMethodManager by lazy { getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager }
-    internal val disposables = CompositeDisposable()
-    internal val nameApi by lazy { provideSearchCosApi() }
-    internal val imgApi by lazy { provideImgApi() }
-
+    private val imm: InputMethodManager by lazy { getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager }
+    private val disposables = CompositeDisposable()
+    private val nameApi by lazy { provideSearchCosApi() }
+    private val imgApi by lazy { provideImgApi() }
+    private val addDialog : AddItemDialog by lazy { AddItemDialog(this@SearchActivity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
         with(search_list) {
             layoutManager = LinearLayoutManager(this@SearchActivity)
             adapter = this@SearchActivity.adapter
+
         }
 
 
@@ -81,7 +82,7 @@ class SearchActivity : Activity(), SearchAdapter.ItemClickListener {
     }
 
     fun getCosmetic(itemName: String) {
-        disposables.add(nameApi.cos(itemName, 50)
+        disposables.add(nameApi.cos(itemName, 30)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showPd() }
                 .doOnError {
@@ -96,7 +97,7 @@ class SearchActivity : Activity(), SearchAdapter.ItemClickListener {
                         existDataView(false)
                     } else {
                         for (i in res.body?.items!!) {
-                            i.ITEM_NAME?.let { getImg(it, Cosmetic(i.ITEM_NAME!!, i.ENTP_NAME!!)) }
+                            getImg(i.ITEM_NAME, Cosmetic(i.ITEM_NAME, i.ENTP_NAME))
                         }
                     }
                 }) { Log.d("jinjoo", "실패: " + it.localizedMessage) })
@@ -107,7 +108,13 @@ class SearchActivity : Activity(), SearchAdapter.ItemClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError { t -> Log.d("jinjoo/getImg1", "실패" + t.localizedMessage) }
                 .subscribe({ res ->
-                    cos.img = res.items[0].image
+                    for (item in res.items){
+                        if(res.items[0].image != null){
+                            cos.img = item.image
+                            cos.category = item.category3
+                            break
+                        }
+                    }
                     Log.d("jinjoof", "사진: " + cos.img)
                     list.add(cos)
                     with(adapter){
@@ -119,6 +126,8 @@ class SearchActivity : Activity(), SearchAdapter.ItemClickListener {
 
     override fun onItemClick(cos: Cosmetic) {
         //아이템 클릭시 처리
-        Toast.makeText(applicationContext,"등록: "+cos.name,Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext,"등록: "+cos.name + " / category: "+cos.category,Toast.LENGTH_SHORT).show()
+
+        addDialog.show()
     }
 }
